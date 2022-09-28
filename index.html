@@ -173,6 +173,7 @@
 
   <body>
     <canvas id="canvas"></canvas>
+
     <script>
       const canvas = document.getElementById("canvas");
       canvas.width = 600;
@@ -209,11 +210,11 @@
         { x: 0.5, y: -0.5, z: 0.5, w: 1 }, // right bottom back
         { x: -0.5, y: -0.5, z: 0.5, w: 1 }, // left bottom back
       ];
-      // vertices = makeCorkscrew();
+      vertices = makeCorkscrew();
       // vertices = loadObj(epona);
 
       let rotation = 0;
-      const view = Matrix4.translate(0, 0, 400);
+      const view = Matrix4.translate(0, 0, 2);
       const projection = Matrix4.perspectiveAspectRatio(
         aspectRatio,
         70,
@@ -223,10 +224,10 @@
 
       setInterval(() => {
         clear();
-        const model = Matrix4.rotateY(rotation);
-        // const model = Matrix4.rotateY(rotation).multiply(
-        //   Matrix4.rotateX(rotation)
-        // );
+        // const model = Matrix4.rotateY(rotation);
+        const model = Matrix4.rotateY(rotation).multiply(
+          Matrix4.rotateX(rotation)
+        );
         rotation = (rotation + 1) % 360;
         const mvp = projection.multiply(view).multiply(model);
 
